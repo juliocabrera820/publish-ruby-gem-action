@@ -1,0 +1,26 @@
+name: Build and publish gem
+description: Publish gem in github packages and rubygems
+author: juliocabrera820
+branding:
+  icon: box
+  color: black
+inputs:
+  github_token:
+    description: GitHub packages token
+    required: false
+  rubygems_api_key:
+    description: Rubygems API key
+    required: false
+  github_username:
+    description: Repository owner
+    required: false
+    default: ${{ github.repository_owner }}
+runs:
+  using: composite
+  steps:
+    - run: ruby -W0 $GITHUB_ACTION_PATH/publish.rb
+      shell: sh
+      env:
+        RUBYGEMS_API_KEY: ${{inputs.rubygems_api_key}}
+        GITHUB_TOKEN: ${{inputs.github_token}}
+        GITHUB_USERNAME: ${{inputs.github_username}}

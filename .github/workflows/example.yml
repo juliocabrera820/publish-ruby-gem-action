@@ -1,0 +1,25 @@
+name: Test github action
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Ruby ${{ matrix.ruby }}
+    strategy:
+      matrix:
+        ruby:
+          - "3.0.6"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Test action in local workflow
+        id: test-action
+        uses: ./
+        with:
+          github_token: xxxxx
+          rubygems_api_key: xxxxx
