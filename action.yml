@@ -18,7 +18,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: ruby -W0 $GITHUB_ACTION_PATH/publish.rb
+    - run: ruby -W0 $GITHUB_ACTION_PATH/main.rb
       shell: sh
       env:
         RUBYGEMS_API_KEY: ${{inputs.rubygems_api_key}}
