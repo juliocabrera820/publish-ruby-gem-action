@@ -3,14 +3,13 @@
 require 'fileutils'
 
 require_relative 'inputs'
-require_relative 'credentials'
 
 # Module to handle credentials
 module Credentials
   def self.generate_gh_credentials
     credentials = <<~CREDENTIALS
       ---
-      :github: Bearer #{Inputs::GITHUB_TOKEN}
+      :github: Bearer #{Inputs.github_token}
     CREDENTIALS
     write_credentials(credentials)
   end
@@ -18,7 +17,7 @@ module Credentials
   def self.generate_rubygems_credentials
     credentials = <<~CREDENTIALS
       ---
-      :rubygems_api_key: #{Inputs::RUBYGEMS_API_KEY}
+      :rubygems_api_key: #{Inputs.rubygems_api_key}
     CREDENTIALS
     write_credentials(credentials)
   end
@@ -32,8 +31,6 @@ module Credentials
   end
 
   def self.delete_credentials_file_path
-    credentials_file_path = "#{Dir.home}/.gem/credentials"
-    CommandSystem.run_command('cat', credentials_file_path)
     FileUtils.rm(credentials_file_path) if File.exist?(credentials_file_path)
   end
 end
