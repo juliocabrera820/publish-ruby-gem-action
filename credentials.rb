@@ -3,7 +3,6 @@
 require 'fileutils'
 
 require_relative 'inputs'
-require_relative 'command_system'
 
 # Module to handle credentials
 module Credentials
@@ -19,12 +18,12 @@ module Credentials
 
   def self.generate_credentials_file
     FileUtils.mkdir_p(gems_path)
-    credentials = '---'
-    File.open(credentials_file_path, 'w') { |f| f.write(credentials) }
+    file_start = "---\n"
+    File.open(credentials_file_path, 'w') { |f| f.write(file_start) }
   end
 
   def self.write_credentials(credentials)
-    File.open(credentials_file_path, 'a') { |f| f.write(credentials) }
+    File.open(credentials_file_path, 'a') { |f| f.write("#{credentials}\n") }
     FileUtils.chmod(0o600, credentials_file_path)
   end
 
@@ -37,7 +36,6 @@ module Credentials
   end
 
   def self.delete_credentials_file_path
-    CommandSystem.run_command('cat', credentials_file_path)
     FileUtils.rm(credentials_file_path) if File.exist?(credentials_file_path)
   end
 end
