@@ -4,12 +4,12 @@ require_relative 'command_system'
 require_relative 'inputs'
 require_relative 'credentials'
 
-# Module for publishing gems to Rubygems and GitHub Packages
+# Module for publishing gems to Rubygems or GitHub Packages
 module Publish
   GEM_EXTENSION = '*.gem'
 
   def self.to_rubygems
-    Credentials.generate_gh_credentials
+    Credentials.add_gh_credentials
     gems = check_gem_files
 
     gems.each do |gem_file|
@@ -18,7 +18,7 @@ module Publish
   end
 
   def self.to_github_packages
-    Credentials.generate_rubygems_credentials
+    Credentials.add_rubygems_credentials
     gems = check_gem_files
 
     gems.each do |gem_file|
@@ -34,6 +34,6 @@ module Publish
   end
 
   def self.github_url
-    "https://rubygems.pkg.github.com/#{Inputs::GITHUB_USERNAME}"
+    "https://rubygems.pkg.github.com/#{Inputs.github_username}"
   end
 end

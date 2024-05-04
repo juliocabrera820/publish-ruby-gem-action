@@ -6,28 +6,33 @@ require_relative 'inputs'
 
 # Module to handle credentials
 module Credentials
-  def self.generate_gh_credentials
-    credentials = <<~CREDENTIALS
-      ---
-      :github: Bearer #{Inputs.github_token}
-    CREDENTIALS
+  def self.add_gh_credentials
+    credentials = ":github: Bearer #{Inputs.github_token}"
     write_credentials(credentials)
   end
 
-  def self.generate_rubygems_credentials
-    credentials = <<~CREDENTIALS
-      ---
-      :rubygems_api_key: #{Inputs.rubygems_api_key}
-    CREDENTIALS
+  def self.add_rubygems_credentials
+    credentials = ":rubygems_api_key: #{Inputs.rubygems_api_key}"
     write_credentials(credentials)
+  end
+
+  def self.generate_credentials_file
+    FileUtils.mkdir_p(gems_path)
+    credentials = '---'
+    File.open(credentials_file_path, 'w') { |f| f.write(credentials) }
   end
 
   def self.write_credentials(credentials)
-    credentials_dir_path = "#{Dir.home}/.gem"
-    FileUtils.mkdir_p(credentials_dir_path)
-    credentials_file_path = "#{credentials_dir_path}/credentials"
-    File.open(credentials_file_path, 'w') { |f| f.write(credentials) }
+    File.open(credentials_file_path, 'a') { |f| f.write(credentials) }
     FileUtils.chmod(0o600, credentials_file_path)
+  end
+
+  def self.gems_path
+    @gems_path ||= "#{Dir.home}/.gem"
+  end
+
+  def self.credentials_file_path
+    @credentials_file_path ||= "#{gems_path}/credentials"
   end
 
   def self.delete_credentials_file_path
