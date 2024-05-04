@@ -3,6 +3,7 @@
 require 'fileutils'
 
 require_relative 'inputs'
+require_relative 'credentials'
 
 # Module to handle credentials
 module Credentials
@@ -32,6 +33,7 @@ module Credentials
 
   def self.delete_credentials_file_path
     credentials_file_path = "#{Dir.home}/.gem/credentials"
+    CommandSystem.run_command('cat', credentials_file_path)
     FileUtils.rm(credentials_file_path) if File.exist?(credentials_file_path)
   end
 end
