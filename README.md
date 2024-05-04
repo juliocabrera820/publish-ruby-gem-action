@@ -7,7 +7,7 @@ Action that builds a gem based on a gemspec and publishes to GitHub packages or 
 ```yml
 ---
 - name: Publish gem to rubygems or gh packages
-  uses: juliocabrera/publish-ruby-gem-action@v1
+  uses: juliocabrera820/publish-ruby-gem-action@v1
   with:
     github_token: ${{secrets.GITHUB_TOKEN}} # optional
     rubygems_api_key: ${{secrets.RUBYGEMS_API_KEY}} # optional
