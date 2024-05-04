@@ -18,12 +18,12 @@ module Credentials
 
   def self.generate_credentials_file
     FileUtils.mkdir_p(gems_path)
-    credentials = '---'
-    File.open(credentials_file_path, 'w') { |f| f.write(credentials) }
+    file_start = "---\n"
+    File.open(credentials_file_path, 'w') { |f| f.write(file_start) }
   end
 
   def self.write_credentials(credentials)
-    File.open(credentials_file_path, 'a') { |f| f.write(credentials) }
+    File.open(credentials_file_path, 'a') { |f| f.write("#{credentials}\n") }
     FileUtils.chmod(0o600, credentials_file_path)
   end
 
