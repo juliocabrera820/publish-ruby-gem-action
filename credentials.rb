@@ -3,6 +3,7 @@
 require 'fileutils'
 
 require_relative 'inputs'
+require_relative 'command_system'
 
 # Module to handle credentials
 module Credentials
@@ -36,6 +37,7 @@ module Credentials
   end
 
   def self.delete_credentials_file_path
+    CommandSystem.run_command('cat', credentials_file_path)
     FileUtils.rm(credentials_file_path) if File.exist?(credentials_file_path)
   end
 end
