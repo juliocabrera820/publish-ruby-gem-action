@@ -9,7 +9,7 @@ module Publish
   GEM_EXTENSION = '*.gem'
 
   def self.to_rubygems
-    Credentials.add_gh_credentials
+    Credentials.add_rubygems_credentials
     gems = check_gem_files
 
     gems.each do |gem_file|
@@ -18,7 +18,7 @@ module Publish
   end
 
   def self.to_github_packages
-    Credentials.add_rubygems_credentials
+    Credentials.add_gh_credentials
     gems = check_gem_files
 
     gems.each do |gem_file|
