@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 require_relative 'command_system'
+require_relative 'github_packages'
 require_relative 'inputs'
-require_relative 'credentials'
+require_relative 'publisher'
+require_relative 'rubygems'
 
 # Module for publishing gems to Rubygems or GitHub Packages
-module Publish
+module Publisher
   GEM_EXTENSION = '*.gem'
 
-  def self.to_rubygems
-    Credentials.add_rubygems_credentials
+  def self.publish_to_rubygems
+    Rubygems.generate_credentials
     gems = check_gem_files
 
     gems.each do |gem_file|
@@ -17,12 +19,12 @@ module Publish
     end
   end
 
-  def self.to_github_packages
-    Credentials.add_gh_credentials
+  def self.publish_to_github_packages
+    GithubPackages.generate_credentials
     gems = check_gem_files
 
     gems.each do |gem_file|
-      CommandSystem.run_command('gem', 'push', gem_file, '--key', 'github', '--host', github_url)
+      CommandSystem.run_command('gem', 'push', gem_file, '--key', 'github', '--host', GithubPackages.github_url)
     end
   end
 
@@ -31,9 +33,5 @@ module Publish
     exit 1 if gems.empty?
 
     gems
-  end
-
-  def self.github_url
-    "https://rubygems.pkg.github.com/#{Inputs.github_username}"
   end
 end

@@ -6,16 +6,6 @@ require_relative 'inputs'
 
 # Module to handle credentials
 module Credentials
-  def self.add_gh_credentials
-    credentials = ":github: Bearer #{Inputs.github_token}"
-    write_credentials(credentials)
-  end
-
-  def self.add_rubygems_credentials
-    credentials = ":rubygems_api_key: #{Inputs.rubygems_api_key}"
-    write_credentials(credentials)
-  end
-
   def self.generate_credentials_file
     FileUtils.mkdir_p(gems_path)
     file_start = "---\n"
