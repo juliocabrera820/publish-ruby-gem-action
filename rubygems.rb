@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'credentials'
-require 'inputs'
+require_relative 'credentials'
+require_relative 'inputs'
 
 # Module to handle rubygems
 module Rubygems
